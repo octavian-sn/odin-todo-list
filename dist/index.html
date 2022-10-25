@@ -16,14 +16,14 @@
         <div id="sider">
             <div id="sider-title">
                 <div class="title">Projects</div>
+                <button class="project-button add">+</button>
             </div>
             <div id="sider-content">
                 <div class="project">
                     <div class="icon"></div>
                     Upcoming
-                    <!-- max 12 char -->
                 </div>
-                <div class="project selected">
+                <div class="project">
                     <div class="icon"></div>
                     School
                 </div>
@@ -31,22 +31,61 @@
         </div>
         <div id="content">
             <div id="content-title">
-                <div class="title">ToDo's</div>
-                <button class="todo-button">+</button>
+                <div class="title">Add Task</div>
+                <button class="todo-button add">+</button>
             </div>
             <div id="content-show">
                 <div class="todo">
-                    <div class="todo-name">Walk the dog in the park</div>
-                    <div class="todo-date"></div>
+                    <div class="todo-name">Math homework</div>
+                    <div class="todo-priority">Urgent</div>
+                    <div class="todo-date">11.06.2023</div>
                     <button>Complete</button>
                 </div>
                 <div class="todo">
-                    <div class="todo-name">Finish schoolwork</div>
-                    <div class="todo-date"></div>
+                    <div class="todo-name">Science Project</div>
+                    <div class="todo-priority">Can wait</div>
+                    <div class="todo-date">11.06.2023</div>
                     <button>Complete</button>
                 </div>
             </div>
         </div>
+        <div id="footer">
+            <span class="git">
+                <a href="https://github.com/octavian-sn">
+                    <img id="git-hub" src="../src/gitw.png" alt="GitHub Logo" height="30px">
+                </a>
+            Created by Octavian Șulic © 2022 TheOdinProject
+            </span>
+        </div>
+        <div class="modal " id="modal">
+            <div id="modal__window">
+                <form>
+                    <div id="form-title">Add new task</div>
+                    <div>
+                      <label for="todo">Title:</label>
+                      <input type="text" id="todo" name="todo" maxlength="12"/>
+                    </div>
+                    <div>
+                      <label for="task">Description:</label>
+                      <textarea name="task" id="task" cols="33" rows="10"></textarea>
+                    </div>
+                    <div>
+                        <label for="priority">Priority</label>
+                        <select name="priority" id="priority">
+                            <option value="low">Optional</option>
+                            <option value="medium">Can wait</option>
+                            <option value="high">Urgent</option>
+                        </select>
+                    </div>
+                    <div>
+                      <label for="date">Due date:</label>
+                      <input type="date" id="date" name="date">
+                    </div>
+                    <button id="add-task" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div id="overlay" class=""></div>
     </div>
 </body>
 </html>

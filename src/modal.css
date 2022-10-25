@@ -1,0 +1,109 @@
+:root {
+    --dark-color: rgb(51, 51, 51);
+    --lime-color: rgba(154, 184, 109, 0.918);
+    --white-color: rgba(255, 255, 255, 0.747);
+    --lime-light-color: rgb(223, 233, 208);
+}
+#modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    z-index: 10; 
+    background-color: var(--lime-light-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 440px;
+    width: 550px;
+    gap: 30px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px 0px #000000;
+}
+
+#modal__window {
+    padding: 0 50px;
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    width: fit-content;
+}
+
+#modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+  
+#overlay {
+    position: fixed;
+    opacity: 0;
+    transition: 200ms ease-in-out;
+    top: 0;  
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    pointer-events: none;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: 'myFont';
+    font-weight: 500;
+}
+form div {
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 5px;
+}
+input,
+#date {
+    width: 344px;
+}
+select{
+    width: 352px;
+}
+#form-title {
+    align-self: center;
+    margin-bottom: 24px;
+    font-size: 2rem;
+    font-weight: 500;
+    color: rgba(99, 134, 46, 0.918);
+
+}
+label {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: rgba(99, 134, 46, 0.918);
+    font-weight: bold;
+}
+input,
+textarea,
+option,
+select {
+    font-size: large;
+    padding-left: 4px;
+    border: 2px solid var(--lime-color);
+    background-color: white;
+}
+#add-task {
+    margin-top: 20px;
+    width: 100px;
+    align-self: center;
+    font-size: large;
+    font-family: 'myFont';
+    font-weight: bolder;
+    color: var(--dark-color);
+    border: 2px solid var(--lime-color);
+    background-color: var(--lime-color);
+    cursor: pointer;
+}
