@@ -29,7 +29,7 @@ body {
     background-size: cover;
     height: 100vh;
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 290px 1fr;
     grid-template-rows: 140px 1fr;
 }
 #header {
@@ -39,7 +39,7 @@ body {
 #logo{
     height: 140px;
     margin-top: 5px;
-    margin-left: 120px;
+    margin-left: 150px;
     background-image: url('./logo.png');
     background-size:500px;
     background-repeat: no-repeat;
@@ -70,15 +70,20 @@ body {
 }
 .project {
     font-size: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 29px;
+    font-size: 1.2rem;
+    font-family: 'myFont';
+}
+.project-name {
     display: flex;
     flex-direction: row;
-    font-size: 1.3rem;
-    font-family: 'myFont';
-    gap: 6px;
+    gap: 3px;
+    width: fit-content;
     cursor: pointer;
     border-left: 2px solid var(--lime-color);
 }
-.project:hover {
+.project-name:hover {
     font-weight: bolder;
     border-left: 2px solid var(--dark-color);
 }
@@ -90,6 +95,12 @@ body {
     background-image: url('./list.png');
     background-repeat: no-repeat;
     width: 24px;
+}
+.delete {
+    background-image: url('./delete.png');
+    background-repeat: no-repeat;
+    width: 24px;
+    cursor: pointer;
 }
 /* Content */
 #content {
@@ -154,6 +165,7 @@ body {
     justify-content: start;
     padding-left: 10px;
     font-size: 1.1rem;
+    overflow: hidden;
 }
 .todo-priority {
     justify-content: center;
