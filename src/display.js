@@ -1,27 +1,26 @@
-const modal = document.getElementById('modal');
-export const overlay = document.getElementById('overlay');
-
-export function displayProject(identify) {
+export function displayProject(title, number) {
     const container = document.getElementById('sider-content');
 
     const project = document.createElement('div');
     project.classList.add('project');
-    project.id = identify;
+    project.id = number;
     const name = document.createElement('div');
     name.classList.add('project-name');
     const icon = document.createElement('div');
     icon.classList.add('icon');
     name.appendChild(icon);
-    const text = document.createTextNode(identify);
+    const text = document.createTextNode(title);
     name.appendChild(text);
     project.appendChild(name);
     const erase = document.createElement('div');
     erase.addEventListener('click', ()=> {
-        deleteProjectDom(identify);
+        deleteProjectDom(number);
     });
     erase.classList.add('delete');
     project.appendChild(erase);
     container.appendChild(project);
+    // Highlight newly created project as selected
+    highlightProject(project);
 }
 
 function deleteProjectDom(arg) {
@@ -29,23 +28,24 @@ function deleteProjectDom(arg) {
     project.remove();
 }
 
-export function displayTask (nameA, priorityA, dateA) {
+export function displayTodo (a, b, c, d) {
     const container = document.getElementById('content-show');
     
     const task = document.createElement('div');
+    task.id = a;
     task.classList.add('todo');
 
     const name = document.createElement('div');
     name.classList.add('todo-name');
-    name.innerText = nameA;
+    name.innerText = b;
     task.appendChild(name);
     const priority = document.createElement('div');
     priority.classList.add('todo-priority');
-    priority.innerText = priorityA;
+    priority.innerText = c;
     task.appendChild(priority);
     const date = document.createElement('div');
     date.classList.add('todo-date');
-    date.innerText = dateA;
+    date.innerText = d;
     task.appendChild(date);
     const button = document.createElement('button');
     button.innerText = 'Complete';
@@ -55,6 +55,18 @@ export function displayTask (nameA, priorityA, dateA) {
 }
 
 export function toggleModal () {
+    const modal = document.getElementById('modal');
+    const overlay = document.getElementById('overlay');
     modal.classList.toggle('active');
     overlay.classList.toggle('active');
 }
+
+export function highlightProject (arg) {
+    const projects = document.getElementsByClassName('project');
+    Array.from(projects).forEach(element => {
+        element.classList.remove('selected');
+    });
+    arg.classList.add('selected');
+}
+
+// console.log(typeof(projects));
