@@ -14,9 +14,23 @@
             <div id="title"></div>
         </div>
         <div id="sider">
+            <div id="sider-categories">
+                <div class="category">
+                    <div id="upcoming"></div>
+                    Upcoming
+                </div>
+                <div class="category">
+                    <div id="today"></div>
+                    Today
+                </div>
+                <div class="category">
+                    <div id="week"></div>
+                    This week
+                </div>
+            </div>
             <div id="sider-title">
                 <div class="title">Projects</div>
-                <button class="project-button add">+</button>
+                <button class="project-button add"></button>
             </div>
             <div id="sider-content">
                 <!-- <div class="project">
@@ -34,7 +48,7 @@
                     <div class="delete"></div>
                 </div> -->
             </div>
-            <button id="test">TEST</button>
+            <!-- <button id="test">TEST</button> -->
         </div>
         <div id="content">
             <div id="content-title">
@@ -70,7 +84,7 @@
                     <div id="form-title">Add new task</div>
                     <div>
                       <label for="todo">Title:</label>
-                      <input type="text" id="todo" name="todo" maxlength="12"/>
+                      <input type="text" id="todo" name="todo" maxlength="25"/>
                     </div>
                     <div>
                       <label for="task">Description:</label>
@@ -79,9 +93,9 @@
                     <div>
                         <label for="priority">Priority</label>
                         <select name="priority" id="priority">
-                            <option value="low">Optional</option>
-                            <option value="medium">Can wait</option>
-                            <option value="high">Urgent</option>
+                            <option value="Optional">Optional</option>
+                            <option value="Can wait">Can wait</option>
+                            <option value="Urgent">Urgent</option>
                         </select>
                     </div>
                     <div>

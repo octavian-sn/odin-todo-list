@@ -91,7 +91,9 @@ document.getElementById('sider-content').addEventListener('click', (e)=> {
 
 // Select Project
 document.getElementById('sider-content').addEventListener('click', (e)=> {
-    // Highlight project upon selection
+    // Eliminate delete button from event listener
+    if (!e.target.classList.contains('delete')) {
+        // Highlight project upon selection
     let project = e.target.closest('.project');
     highlightProject(project);
 
@@ -103,6 +105,7 @@ document.getElementById('sider-content').addEventListener('click', (e)=> {
     manager.getProject().showToDoS().forEach(item =>{
         displayTodo(item.id, item.name, item.priority, item.date);
     })
+    }
 });
 
 // Open ToDo Pop-up
@@ -146,11 +149,11 @@ document.getElementById('add-task').addEventListener('click', (e) => {
 
 
 // Testing
-document.getElementById('test').addEventListener('click', ()=>{
+// document.getElementById('test').addEventListener('click', ()=>{
     // console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
-    console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
+    // console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
     // console.log(`%cExecuting getProject(): %c${manager.getProject()}`, 'color: green', 'color: white');
     // manager.testingChange()
     // manager.testingShow();
-})
+// })
 

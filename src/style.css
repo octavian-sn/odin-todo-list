@@ -17,12 +17,9 @@ body {
 }
 .title {
     font-family: 'myFont';
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--dark-color);
-    /* text-decoration: underline;
-    text-decoration-thickness: 3px; 
-    text-decoration-color: var(--dark-color); */
 }
 #background {
     background: url('./background.jpg');
@@ -44,32 +41,69 @@ body {
     background-size:500px;
     background-repeat: no-repeat;
 }
+
 /* Sider */
 #sider {
     background-color: var(--lime-color);
     padding: 26px;
 }
+.category {
+    font-size: 1.2rem;
+    font-family: 'myFont';
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+    width: fit-content;
+    cursor: pointer;
+    border-left: 2px solid var(--lime-color);
+}
+.category div {
+    background-repeat: no-repeat;
+    width: 24px;
+}
+#upcoming {
+    background-image: url('./upcoming.png');
+}
+#today {
+    background-image: url('./today.png');
+}
+#week {
+    background-image: url('./week.png');
+}
 #sider-title {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 6px;
-    margin-bottom: 16px;
+    padding: 6px 0 0 6px;
+    margin-bottom: 20px;
+    margin-top: 26px;
+}
+#sider-title .title {
+    font-size: 1.4rem;
+    color: black;
+    padding-top: 5px;
 }
 .project-button {
-    color: var(--lime-color);
-    background-color: rgba(255, 255, 255, 0.897);
-    border: 2px solid rgba(255, 255, 255, 0);
+    border: 0;
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    background-image: url('./plus.png');
+    background-color: inherit;
 }
+.project-button:hover {
+    background-image: url('./plushover.png');
+}
+
 /* Sider-content */
-#sider-content {
+#sider-content,
+#sider-categories {
     display: flex;
     flex-direction: column;
     padding-left: 5px;
     gap: 18px;
 }
 .project {
-    font-size: 1.5rem;
     display: grid;
     grid-template-columns: 1fr 29px;
     font-size: 1.2rem;
@@ -83,7 +117,8 @@ body {
     cursor: pointer;
     border-left: 2px solid var(--lime-color);
 }
-.project-name:hover {
+.project-name:hover,
+.category:hover {
     font-weight: bolder;
     border-left: 2px solid var(--dark-color);
 }
@@ -102,6 +137,7 @@ body {
     width: 24px;
     cursor: pointer;
 }
+
 /* Content */
 #content {
     background-color: var(--white-color);
@@ -112,10 +148,9 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* grid-template-columns: 210px 1fr 120px 80px; */
     margin-bottom: 24px;
 }
-.add {
+.todo-button.add {
     font-size: 46px;
     height: 36px;
     width: 36px;
@@ -126,7 +161,7 @@ body {
     border-radius: 50%;
     cursor: pointer;
 }
-.add:hover {
+.todo-button:hover {
     background-color: var(--dark-color);
     border-color: var(--dark-color);
     color: white;
@@ -150,7 +185,6 @@ body {
     height: 36px;
     background-color: var(--gray-color);
     border-radius: 4px;
-    cursor: pointer;
     color: white;
 }
 .todo:hover {
@@ -183,6 +217,10 @@ body {
     font-size: 1rem;
     cursor: pointer;
 }
+.todo.selected {
+    background-color: var(--lime-color);
+}
+
 /* FOOTER */
 #footer {
     width: 100vw;
@@ -190,6 +228,7 @@ body {
     background-color: var(--dark-color);
 }
 .git {
+    font-family: 'myFont';
     display: flex;
     flex-direction: row;
     justify-content: center;
