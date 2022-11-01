@@ -1,7 +1,7 @@
 import './style.css';
 import './modal.css';
 import { v4 as uuidv4 } from 'uuid';
-import { displayProject, displayTodo, toggleModal, highlightProject, clearToDos} from './display.js';
+import { displayProject, displayTodo, toggleModal, highlightProject, clearToDos, deleteProject} from './display.js';
 
 // Todo factory
 const toDo = (name, priority, date, description, id) => {
@@ -49,9 +49,14 @@ const manager = (() => {
         const newProject = project(name, id);
         projects.push(newProject);
     }
-    const deleteProject = () => {
+    const deleteProject = (a) => {
+        projects.forEach(project => {
+            if (project.id == a) {
+                projects.splice(projects.indexOf(project), 1);
+            }
+        })
     } 
-    return {getProject, addProject, changeProject, projects, currentProjectId}
+    return {getProject, addProject, changeProject, deleteProject, projects, currentProjectId}
 })() 
 
 // Process input for project name
@@ -67,19 +72,32 @@ const userInput = () => {
 ////////// Events
 // Add Project
 document.querySelector('.project-button').addEventListener('click', (e)=> {
+    // Add project
     manager.addProject();
     const project = manager.getProject();
+
+    // Display project and it's ToDo's
     displayProject(project.name, project.id);
     clearToDos();
 });
+// Delete Project
+document.getElementById('sider-content').addEventListener('click', (e)=> {
+    if (e.target.classList.contains('delete')) {
+        manager.deleteProject(e.target.parentElement.id);
+        deleteProject(e.target.parentElement.id);
+        clearToDos();
+    }
+})
 
 // Select Project
-document.getElementById('sider-content').addEventListener('click' , (e)=> {
+document.getElementById('sider-content').addEventListener('click', (e)=> {
     // Highlight project upon selection
     let project = e.target.closest('.project');
     highlightProject(project);
+
     // Set current project in manager
     manager.changeProject(project.id);
+
     // Display current project's ToDo's
     clearToDos();
     manager.getProject().showToDoS().forEach(item =>{
@@ -109,12 +127,16 @@ document.getElementById('add-task').addEventListener('click', (e) => {
     }
     // Select project
     let project = manager.getProject();
+
     // Get an id for the ToDo
     let id = uuidv4();
+
     // Add Todo to project's array
     project.addTodo(title.value, priority.value, date.value, description.value, id);
+
     // Display Todo
     displayTodo(id, title.value, priority.value, date.value);
+
     // Close modal and clear fields
     clearFields();
     toggleModal();
@@ -124,11 +146,11 @@ document.getElementById('add-task').addEventListener('click', (e) => {
 
 
 // Testing
-// document.getElementById('test').addEventListener('click', ()=>{
-//     // console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
-//     // console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
-//     // console.log(`%cExecuting getProject(): %c${manager.getProject()}`, 'color: green', 'color: white');
-//     let project = manager.getProject()
-//     console.log(projects)
-// })
+document.getElementById('test').addEventListener('click', ()=>{
+    // console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
+    console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
+    // console.log(`%cExecuting getProject(): %c${manager.getProject()}`, 'color: green', 'color: white');
+    // manager.testingChange()
+    // manager.testingShow();
+})
 

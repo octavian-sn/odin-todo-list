@@ -13,9 +13,6 @@ export function displayProject(title, number) {
     name.appendChild(text);
     project.appendChild(name);
     const erase = document.createElement('div');
-    erase.addEventListener('click', ()=> {
-        deleteProjectDom(number);
-    });
     erase.classList.add('delete');
     project.appendChild(erase);
     container.appendChild(project);
@@ -23,7 +20,7 @@ export function displayProject(title, number) {
     highlightProject(project);
 }
 
-function deleteProjectDom(arg) {
+export function deleteProject(arg) {
     const project = document.getElementById(arg);
     project.remove();
 }
