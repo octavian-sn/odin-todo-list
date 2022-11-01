@@ -69,4 +69,6 @@ export function highlightProject (arg) {
     arg.classList.add('selected');
 }
 
-// console.log(typeof(projects));
+ export function clearToDos () {
+    document.getElementById('content-show').innerHTML = '';
+}
