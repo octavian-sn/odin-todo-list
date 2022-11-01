@@ -18,7 +18,7 @@ const toDo = (name, priority, date, description, id) => {
 const project = (name, id) => {
     const toDoList = [];
     const currentToDo = '';
-    const showList = () => toDoList;
+    const showToDoS = () => toDoList;
     const addTodo = (a, b, c, d, e) => {
         const item = toDo(a, b, c, d, e);
         toDoList.push(item);
@@ -28,28 +28,30 @@ const project = (name, id) => {
             if (element.id == a) toDoList.splice(toDoList[element], 1);
         });
     }
-    return {name, id, currentToDo, addTodo, deleteTodo, showList}
+    return {name, id, currentToDo, addTodo, deleteTodo, showToDoS}
 }
 
 // Project Manager
-const projectManager = (() => {
-    let currentTaskId = '';
+const manager = (() => {
     let currentProjectId = '';
     const projects = []
     const getProject = () => {
-        return (projectManager.projects).find(item => item.id == 
-        projectManager.currentProjectId);
+        return (manager.projects).find(item => item.id == 
+        manager.currentProjectId);
+    }
+    const changeProject = (a) => {
+        manager.currentProjectId = a;
     }
     const addProject = () => {
         let name = userInput()
         let id = uuidv4();
-        projectManager.currentProjectId = id;
+        manager.currentProjectId = id;
         const newProject = project(name, id);
         projects.push(newProject);
     }
     const deleteProject = () => {
     } 
-    return {getProject, addProject, projects, currentProjectId}
+    return {getProject, addProject, changeProject, projects, currentProjectId}
 })() 
 
 // Process input for project name
@@ -65,24 +67,30 @@ const userInput = () => {
 ////////// Events
 // Add Project
 document.querySelector('.project-button').addEventListener('click', (e)=> {
-    projectManager.addProject();
-    const project = projectManager.getProject();
+    manager.addProject();
+    const project = manager.getProject();
     displayProject(project.name, project.id);
     clearToDos();
 });
 
 // Select Project
 document.getElementById('sider-content').addEventListener('click' , (e)=> {
+    // Highlight project upon selection
     let project = e.target.closest('.project');
     highlightProject(project);
+    // Set current project in manager
+    manager.changeProject(project.id);
+    // Display current project's ToDo's
     clearToDos();
+    manager.getProject().showToDoS().forEach(item =>{
+        displayTodo(item.id, item.name, item.priority, item.date);
+    })
 });
 
 // Open ToDo Pop-up
 document.querySelector('.todo-button').addEventListener('click', toggleModal);
 // Close Todo Pop-up
 document.getElementById('overlay').addEventListener('click', toggleModal);
-
 
 // Add ToDo
 document.getElementById('add-task').addEventListener('click', (e) => {
@@ -100,7 +108,7 @@ document.getElementById('add-task').addEventListener('click', (e) => {
         date.value = '';
     }
     // Select project
-    let project = projectManager.getProject();
+    let project = manager.getProject();
     // Get an id for the ToDo
     let id = uuidv4();
     // Add Todo to project's array
@@ -116,11 +124,11 @@ document.getElementById('add-task').addEventListener('click', (e) => {
 
 
 // Testing
-document.getElementById('test').addEventListener('click', ()=>{
-    // console.log(`%cCurrent Project Id is: %c${projectManager.currentProjectId}`, 'color: green', 'color: white');
-    // console.log(`%cProjects are: %c${projectManager.projects}`, 'color: green', 'color: white');
-    // console.log(`%cExecuting getProject(): %c${projectManager.getProject()}`, 'color: green', 'color: white');
-    let project = projectManager.getProject()
-    console.log(project)
-})
+// document.getElementById('test').addEventListener('click', ()=>{
+//     // console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
+//     // console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
+//     // console.log(`%cExecuting getProject(): %c${manager.getProject()}`, 'color: green', 'color: white');
+//     let project = manager.getProject()
+//     console.log(projects)
+// })
 
