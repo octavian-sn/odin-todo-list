@@ -61,13 +61,13 @@ body {
     background-repeat: no-repeat;
     width: 24px;
 }
-#upcoming {
+#upcoming div {
     background-image: url('./upcoming.png');
 }
-#today {
+#today div {
     background-image: url('./today.png');
 }
-#week {
+#week div {
     background-image: url('./week.png');
 }
 #sider-title {
@@ -76,7 +76,7 @@ body {
     justify-content: space-between;
     padding: 6px 0 0 6px;
     margin-bottom: 20px;
-    margin-top: 26px;
+    margin-top: 20px;
 }
 #sider-title .title {
     font-size: 1.4rem;
