@@ -34,7 +34,7 @@ const project = (name, id) => {
 // Project Manager
 const manager = (() => {
     let currentProjectId = '';
-    const projects = []
+    const projects = JSON.parse(localStorage.getItem('todo.projects')) || [];
     const getProject = () => {
         return (manager.projects).find(item => item.id == 
         manager.currentProjectId);
@@ -48,6 +48,7 @@ const manager = (() => {
         manager.currentProjectId = id;
         const newProject = project(name, id);
         projects.push(newProject);
+        saveData();
     }
     const deleteProject = (a) => {
         projects.forEach(project => {
@@ -68,6 +69,10 @@ const userInput = () => {
         return userInput();
     }
 }
+// Update Local Storage
+function saveData() {
+    localStorage.setItem('todo.projects', JSON.stringify(manager.projects))
+}
 
 ////////// Events
 // Add Project
@@ -86,6 +91,7 @@ document.getElementById('sider-content').addEventListener('click', (e)=> {
         manager.deleteProject(e.target.parentElement.id);
         deleteProject(e.target.parentElement.id);
         clearToDos();
+        saveData();
     }
 })
 
@@ -146,14 +152,20 @@ document.getElementById('add-task').addEventListener('click', (e) => {
 });
 
 
-
+window.addEventListener('load', ()=> {
+    manager.projects.forEach(item=> {
+        displayProject(item.name, item.id);
+    })
+    highlightProject()
+});
 
 // Testing
-// document.getElementById('test').addEventListener('click', ()=>{
-    // console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
-    // console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
-    // console.log(`%cExecuting getProject(): %c${manager.getProject()}`, 'color: green', 'color: white');
-    // manager.testingChange()
-    // manager.testingShow();
-// })
+document.getElementById('test').addEventListener('click', ()=>{
+    let project = manager.getProject();
+    console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
+    console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
+    console.log(`%cExecuting getProject(): %c${manager.getProject()}`, 'color: green', 'color: white');
+    console.log(project);
+    // render();
+})
 

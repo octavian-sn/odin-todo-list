@@ -63,7 +63,7 @@ export function highlightProject (arg) {
     Array.from(projects).forEach(element => {
         element.classList.remove('selected');
     });
-    arg.classList.add('selected');
+    if (arg) arg.classList.add('selected');
 }
 
  export function clearToDos () {
