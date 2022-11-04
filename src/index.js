@@ -1,16 +1,17 @@
 import './style.css';
 import './modal.css';
 import { v4 as uuidv4 } from 'uuid';
-import { displayProject, displayTodo, toggleModal, highlightProject, clearToDos, deleteProject} from './display.js';
+import { deleteToDoS, displayProject, displayTodo, toggleModal, highlightProject, clearToDos, deleteProject} from './display.js';
 
 // Todo factory
-const toDo = (name, priority, date, description, id) => {
+const toDo = (name, priority, date, description, id, projectId) => {
     return {
         name,
         priority,
         date,
         description,
         id,
+        projectId
     }
 }
 
@@ -18,10 +19,9 @@ const toDo = (name, priority, date, description, id) => {
 const project = (name, id, list) => {
     const toDoList = list || [];
     const showToDoS = () => toDoList;
-    const addTodo = (a, b, c, d, e) => {
-        const item = toDo(a, b, c, d, e);
+    const addTodo = (a, b, c, d, e, f) => {
+        const item = toDo(a, b, c, d, e, f);
         toDoList.push(item);
-        saveData();
     }
     const deleteTodo = (a) => {
         toDoList.forEach(element => {
@@ -47,7 +47,6 @@ const manager = (() => {
         manager.currentProjectId = b;
         const newProject = project(a, b);
         projects.push(newProject);
-        saveData();
     }
     const deleteProject = (a) => {
         projects.forEach(project => {
@@ -60,7 +59,7 @@ const manager = (() => {
         currentProjectId}
 })() 
 
-// Process input for project name
+// Process prompt input for project name
 const userInput = () => {
     let name = prompt('Enter project name (maximum 12 characters).');
     if (name.length < 13 && name !== '') return name;
@@ -76,7 +75,7 @@ function saveData() {
     localStorage.setItem('current.project', JSON.stringify(manager.currentProjectId));
 }
 
-// Reconstruct Objects from Local Storage
+// Reconstruct Objects from Local Storage if there are any
 function reconstruct() {
     if (JSON.parse(localStorage.getItem('todo.projects')) === null) null;
     else {
@@ -96,6 +95,15 @@ function defaultFolder () {
     }
 }
 
+// Display AllToDos
+function displayAllToDos () {
+    manager.projects.forEach(project => {
+        project.showToDoS().forEach(item =>{
+            displayTodo(item.id, item.name, item.priority, item.date, item.projectId);
+        })
+    })
+}
+
 ////////// Events
 // Add Project
 document.querySelector('.project-button').addEventListener('click', (e)=> {
@@ -103,9 +111,10 @@ document.querySelector('.project-button').addEventListener('click', (e)=> {
     manager.addProject(userInput(), uuidv4());
     const project = manager.getProject();
 
-    // Display project and it's ToDo's
+    // Display project
     displayProject(project.name, project.id);
     clearToDos();
+    saveData()
 });
 // Delete Project
 document.getElementById('sider-content').addEventListener('click', (e)=> {
@@ -113,7 +122,7 @@ document.getElementById('sider-content').addEventListener('click', (e)=> {
         manager.deleteProject(e.target.parentElement.id);
         deleteProject(e.target.parentElement.id);
         manager.changeProject('');
-        clearToDos();
+        deleteToDoS(e.target.parentElement.id);
         saveData();
     }
 })
@@ -137,6 +146,17 @@ document.getElementById('sider-content').addEventListener('click', (e)=> {
     saveData()
     }
 });
+
+// Select Upcoming
+document.getElementById('upcoming').addEventListener('click', (e)=> {
+    clearToDos();
+    // Display all ToDos
+    displayAllToDos();
+    manager.changeProject('upcoming');
+    highlightProject();
+    document.getElementById('upcoming').classList.add('selected');
+    saveData();
+})
 
 // Open ToDo Pop-up
 document.querySelector('.todo-button').addEventListener('click', toggleModal);
@@ -165,14 +185,16 @@ document.getElementById('add-task').addEventListener('click', (e) => {
     let id = uuidv4();
 
     // Add Todo to project's array
-    project.addTodo(title.value, priority.value, date.value, description.value, id);
+    project.addTodo(title.value, priority.value, date.value, description.value, 
+        id, manager.currentProjectId);
 
     // Display Todo
-    displayTodo(id, title.value, priority.value, date.value);
+    displayTodo(id, title.value, priority.value, date.value, manager.currentProjectId);
 
     // Close modal and clear fields
     clearFields();
     toggleModal();
+    saveData()
 });
 
 // Initial Page Load
@@ -185,9 +207,13 @@ window.addEventListener('load', ()=> {
     })
     highlightProject()
     document.getElementById(manager.currentProjectId).classList.add('selected');
-    manager.getProject().showToDoS().forEach(item =>{
-        displayTodo(item.id, item.name, item.priority, item.date);
-    })
+    if (manager.currentProjectId === 'upcoming') {
+        displayAllToDos();
+    } else {
+        manager.getProject().showToDoS().forEach(item =>{
+            displayTodo(item.id, item.name, item.priority, item.date, item.projectId);
+        })
+    }
 });
 
 // Testing

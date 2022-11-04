@@ -25,11 +25,12 @@ export function deleteProject(arg) {
     project.remove();
 }
 
-export function displayTodo (a, b, c, d) {
+export function displayTodo (a, b, c, d, e) {
     const container = document.getElementById('content-show');
     
     const task = document.createElement('div');
     task.id = a;
+    task.dataset.parent = e;
     task.classList.add('todo');
 
     const name = document.createElement('div');
@@ -58,14 +59,25 @@ export function toggleModal () {
     overlay.classList.toggle('active');
 }
 
-export function highlightProject (arg) {
+export function highlightProject (domElement) {
     const projects = document.getElementsByClassName('project');
+    const options = document.getElementsByClassName('category');
+    Array.from(options).forEach(element => {
+        element.classList.remove('selected')
+    });
     Array.from(projects).forEach(element => {
         element.classList.remove('selected');
     });
-    if (arg) arg.classList.add('selected');
+    if (domElement) domElement.classList.add('selected');
 }
 
- export function clearToDos () {
+export function clearToDos () {
     document.getElementById('content-show').innerHTML = '';
+}
+
+export function deleteToDoS (a) {
+    const tasks = document.querySelectorAll(`[data-parent='${a}']`);
+    tasks.forEach(task => {
+        task.remove();
+    })
 }
