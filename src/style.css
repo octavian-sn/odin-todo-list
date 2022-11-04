@@ -103,11 +103,12 @@ body {
     padding-left: 5px;
     gap: 18px;
 }
-.project {
+#sider-content .project {
     display: grid;
     grid-template-columns: 1fr 29px;
     font-size: 1.2rem;
     font-family: 'myFont';
+    /* border-left: 2px solid var(--lime-color); */
 }
 .project-name {
     display: flex;
