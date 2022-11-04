@@ -2,7 +2,6 @@ import './style.css';
 import './modal.css';
 import { v4 as uuidv4 } from 'uuid';
 import { displayProject, displayTodo, toggleModal, highlightProject, clearToDos, deleteProject} from './display.js';
-import { id } from 'date-fns/locale';
 
 // Todo factory
 const toDo = (name, priority, date, description, id) => {
