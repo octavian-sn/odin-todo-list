@@ -225,26 +225,6 @@ input[type="checkbox"] {
 input[type="checkbox"]:checked {
     background-image: url('./check.png');
 }
-/* Delete from here */
-.colorone {
-    /* background-color: var(--gray-color);
-    color: white;
-    font-weight: bolder; */
-}
-.colortwo {
-    color: rgb(226, 188, 83);
-}
-.two {
-    border-left: 6px solid rgb(226, 188, 83);
-}
-.colorthree {
-    color: var(--red-color);
-}
-.three {
-    border-left: 6px solid var(--red-color);
-
-}
-/* Delete to here */
 .todo-priority {
     font-weight: bolder;
     justify-content: center;

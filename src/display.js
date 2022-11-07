@@ -57,7 +57,7 @@ export function displayTodo (a, b, c, d, e, f) {
     checkbox.type = 'checkbox';
     if (f === 'completed') {
         checkbox.checked = true;
-        task.classList.add = 'completed';
+        task.classList.add('completed');
     }
     task.appendChild(checkbox);
 
@@ -92,4 +92,9 @@ export function deleteToDoS (a) {
     tasks.forEach(task => {
         task.remove();
     })
+}
+
+export function checkUncheckToDo (a) {
+    const todo = document.getElementById(a);
+    todo.classList.toggle('completed');
 }

@@ -2,7 +2,7 @@ import './style.css';
 import './modal.css';
 import { v4 as uuidv4 } from 'uuid';
 import { deleteToDoS, displayProject, displayTodo, toggleModal, highlightProject,
-     clearToDos, deleteProject} from './display.js';
+     clearToDos, deleteProject, checkUncheckToDo} from './display.js';
 
 // Todo factory
 const toDo = (name, priority, date, description, id, projectId, status = 'uncompleted') => {
@@ -25,12 +25,21 @@ const project = (name, id, list) => {
         const item = toDo(a, b, c, d, e, f);
         toDoList.push(item);
     }
+    const checkToDo = (a) => {
+        toDoList.forEach(task => {
+            if (task.id === a) {
+                if (task.status === 'uncompleted') {
+                    task.status = 'completed'
+                } else { task.status = 'uncompleted'}
+            }
+        })
+    }
     const deleteTodo = (a) => {
-        toDoList.forEach(element => {
-            if (element.id == a) toDoList.splice(toDoList[element], 1);
+        toDoList.forEach(task => {
+            if (task.id == a) toDoList.splice(toDoList[task], 1);
         });
     }
-    return {name, id, toDoList, addTodo, deleteTodo, showToDoS}
+    return {name, id, toDoList, addTodo, deleteTodo, showToDoS, checkToDo}
 }
 
 // Project Manager
@@ -38,9 +47,8 @@ const manager = (() => {
     let currentProjectId = JSON.parse(localStorage.getItem('current.project')) || 'upcoming';
     const projects = reconstruct() || [];
     
-    const getProject = () => {
-        return (manager.projects).find(item => item.id == 
-        manager.currentProjectId);
+    const getProject = (a) => {
+        return (manager.projects).find(item => item.id == a);
     }
     const changeProject = (a) => {
         manager.currentProjectId = a;
@@ -111,7 +119,7 @@ function displayAllToDos () {
 document.querySelector('.project-button').addEventListener('click', (e)=> {
     // Add project
     manager.addProject(userInput(), uuidv4());
-    const project = manager.getProject();
+    const project = manager.getProject(manager.currentProjectId);
 
     // Display project
     displayProject(project.name, project.id);
@@ -142,8 +150,9 @@ document.getElementById('sider-content').addEventListener('click', (e)=> {
 
     // Display current project's ToDo's
     clearToDos();
-    manager.getProject().showToDoS().forEach(item =>{
-        displayTodo(item.id, item.name, item.priority, item.date);
+    manager.getProject(manager.currentProjectId).showToDoS().forEach(item =>{
+        displayTodo(item.id, item.name, item.priority, item.date, 
+            manager.currentProjectId, item.status);
     })
     saveData()
     }
@@ -181,7 +190,7 @@ document.getElementById('add-task').addEventListener('click', (e) => {
         date.value = '';
     }
     // Select project
-    let project = manager.getProject();
+    let project = manager.getProject(manager.currentProjectId);
 
     // Get an id for the ToDo
     let id = uuidv4();
@@ -199,6 +208,19 @@ document.getElementById('add-task').addEventListener('click', (e) => {
     saveData()
 });
 
+// Check/Uncheck ToDo's for completion
+document.getElementById('content-show').addEventListener('click', (e)=> {
+    if (e.target.type == 'checkbox') {
+        // Identify parent project
+        const project = manager.getProject(e.target.parentElement.getAttribute('data-parent'));
+        // Data
+        project.checkToDo(e.target.parentElement.id);
+        // DOM
+        checkUncheckToDo(e.target.parentElement.id);
+        saveData();
+    }
+})
+
 // Initial Page Load
 window.addEventListener('load', ()=> {
     defaultFolder();
@@ -212,7 +234,7 @@ window.addEventListener('load', ()=> {
     if (manager.currentProjectId === 'upcoming') {
         displayAllToDos();
     } else {
-        manager.getProject().showToDoS().forEach(item =>{
+        manager.getProject(manager.currentProjectId).showToDoS().forEach(item =>{
             displayTodo(item.id, item.name, item.priority, item.date, item.projectId, item.status);
         })
     }
@@ -222,7 +244,7 @@ window.addEventListener('load', ()=> {
 document.getElementById('test').addEventListener('click', ()=>{
     console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
     console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
-    console.log(`%cExecuting getProject(): %c${manager.getProject()}`, 'color: green', 'color: white');
+    console.log(`%cExecuting getProject(): %c${manager.getProject(manager.currentProjectId)}`, 'color: green', 'color: white');
     // console.log(project);
     console.log(manager.projects);
     // console.log(reconstruct());
