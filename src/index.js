@@ -78,6 +78,8 @@ function userInput() {
     } else if (name.length > 16) {
         alert('Input is not a valid name, please try again.');
         return userInput();
+    } else {
+        return name;
     }
 }
 
