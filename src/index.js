@@ -70,11 +70,13 @@ const manager = (() => {
 })() 
 
 // Process prompt input for project name
-const userInput = () => {
+function userInput() {
     let name = prompt('Enter project name (maximum 15 characters).');
-    if (name.length < 16 && name !== '') return name;
-    else if (name !== '') {
-        alert('Too many characters');
+    if (name === '') {
+        alert('Name cannot be empty.');
+        return userInput();
+    } else if (name.length > 16) {
+        alert('Input is not a valid name, please try again.');
         return userInput();
     }
 }
@@ -126,6 +128,7 @@ document.querySelector('.project-button').addEventListener('click', (e)=> {
     clearToDos();
     saveData()
 });
+
 // Delete Project
 document.getElementById('sider-content').addEventListener('click', (e)=> {
     if (e.target.classList.contains('delete')) {
