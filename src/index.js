@@ -1,17 +1,19 @@
 import './style.css';
 import './modal.css';
 import { v4 as uuidv4 } from 'uuid';
-import { deleteToDoS, displayProject, displayTodo, toggleModal, highlightProject, clearToDos, deleteProject} from './display.js';
+import { deleteToDoS, displayProject, displayTodo, toggleModal, highlightProject,
+     clearToDos, deleteProject} from './display.js';
 
 // Todo factory
-const toDo = (name, priority, date, description, id, projectId) => {
+const toDo = (name, priority, date, description, id, projectId, status = 'uncompleted') => {
     return {
         name,
         priority,
         date,
         description,
         id,
-        projectId
+        projectId,
+        status
     }
 }
 
@@ -61,8 +63,8 @@ const manager = (() => {
 
 // Process prompt input for project name
 const userInput = () => {
-    let name = prompt('Enter project name (maximum 12 characters).');
-    if (name.length < 13 && name !== '') return name;
+    let name = prompt('Enter project name (maximum 15 characters).');
+    if (name.length < 16 && name !== '') return name;
     else if (name !== '') {
         alert('Too many characters');
         return userInput();
@@ -99,7 +101,7 @@ function defaultFolder () {
 function displayAllToDos () {
     manager.projects.forEach(project => {
         project.showToDoS().forEach(item =>{
-            displayTodo(item.id, item.name, item.priority, item.date, item.projectId);
+            displayTodo(item.id, item.name, item.priority, item.date, item.projectId, item.status);
         })
     })
 }
@@ -211,7 +213,7 @@ window.addEventListener('load', ()=> {
         displayAllToDos();
     } else {
         manager.getProject().showToDoS().forEach(item =>{
-            displayTodo(item.id, item.name, item.priority, item.date, item.projectId);
+            displayTodo(item.id, item.name, item.priority, item.date, item.projectId, item.status);
         })
     }
 });

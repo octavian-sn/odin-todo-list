@@ -25,7 +25,7 @@ export function deleteProject(arg) {
     project.remove();
 }
 
-export function displayTodo (a, b, c, d, e) {
+export function displayTodo (a, b, c, d, e, f) {
     const container = document.getElementById('content-show');
     
     const task = document.createElement('div');
@@ -40,14 +40,26 @@ export function displayTodo (a, b, c, d, e) {
     const priority = document.createElement('div');
     priority.classList.add('todo-priority');
     priority.innerText = c;
+    if (c === 'CAN WAIT') {
+        task.style.borderLeftColor = 'var(--yellow-color)';
+        priority.style.color = 'var(--yellow-color)';
+    }
+    if (c === 'URGENT') {
+        task.style.borderLeftColor = 'var(--red-color)';
+        priority.style.color = 'var(--red-color)';
+    }
     task.appendChild(priority);
     const date = document.createElement('div');
     date.classList.add('todo-date');
     date.innerText = d;
     task.appendChild(date);
-    const button = document.createElement('button');
-    button.innerText = 'Complete';
-    task.appendChild(button);
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    if (f === 'completed') {
+        checkbox.checked = true;
+        task.classList.add = 'completed';
+    }
+    task.appendChild(checkbox);
 
     container.appendChild(task);
 }

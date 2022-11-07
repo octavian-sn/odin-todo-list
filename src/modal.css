@@ -65,7 +65,7 @@ form div {
     justify-content: end;
     gap: 5px;
 }
-input,
+form input,
 #date {
     width: 344px;
 }
@@ -86,7 +86,7 @@ label {
     color: rgba(99, 134, 46, 0.918);
     font-weight: bold;
 }
-input,
+form input,
 textarea,
 option,
 select {

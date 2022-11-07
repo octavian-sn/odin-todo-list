@@ -7,7 +7,10 @@
     --dark-color: rgb(51, 51, 51);
     --lime-color: rgba(154, 184, 109, 0.918);
     --white-color: rgba(255, 255, 255, 0.747);
-    --gray-color: rgb(110, 114, 106);
+    --gray-color: rgb(93, 97, 89);
+    --red-color: rgb(255, 126, 126);
+    --yellow-color: rgb(226, 188, 83);
+    --completed--color: rgb(184, 184, 184);
 }
 * {
     overflow: hidden;
@@ -142,7 +145,7 @@ body {
 /* Content */
 #content {
     background-color: var(--white-color);
-    padding: 26px;
+    padding: 26px 15px 0 50px;
 }
 #content-title {
     padding: 6px;
@@ -178,19 +181,25 @@ body {
     gap: 18px;
 }
 .todo{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'myFont';
     font-size: 1rem;
-    max-width: 900px;
+    max-width: 800px;
     display: grid;
-    grid-template-columns: 1fr 80px 120px 80px;
+    grid-template-columns: 1fr 90px 140px 40px;
     height: 36px;
     background-color: var(--gray-color);
     border-radius: 4px;
+    border-left: 6px solid var(--gray-color);
     color: white;
 }
 .todo:hover {
-    background-color: var(--lime-color);
-    color: var(--dark-color);
+    background-color: var(--dark-color);
+    border-left: 6px solid initial;
+}
+.completed,
+.completed:hover {
+    /* background-color: var(--completed--color); */
+    opacity: 50%;
 }
 .todo div {
     display: flex;
@@ -198,28 +207,54 @@ body {
 }
 .todo-name {
     justify-content: start;
-    padding-left: 10px;
+    padding-left: 12px;
     font-size: 1.1rem;
     overflow: hidden;
 }
+input[type="checkbox"] {
+    align-self: center;
+    appearance: none;
+    background-color: rgb(228, 228, 228);
+    border-radius: 9%;
+    height: 20px;
+    width: 20px;
+    margin: 0;
+    cursor: pointer;
+    background-size: cover;
+}
+input[type="checkbox"]:checked {
+    background-image: url('./check.png');
+}
+/* Delete from here */
+.colorone {
+    /* background-color: var(--gray-color);
+    color: white;
+    font-weight: bolder; */
+}
+.colortwo {
+    color: rgb(226, 188, 83);
+}
+.two {
+    border-left: 6px solid rgb(226, 188, 83);
+}
+.colorthree {
+    color: var(--red-color);
+}
+.three {
+    border-left: 6px solid var(--red-color);
+
+}
+/* Delete to here */
 .todo-priority {
+    font-weight: bolder;
     justify-content: center;
-    border-left: 2px solid var(--lime-color);
 }
 .todo-date {
     justify-content: center;
-    border-left: 2px solid var(--lime-color);
-    border-right: 2px solid var(--lime-color);
-}
-.todo > button {
-    background-color: inherit;
-    border: 0;
-    color: inherit;
-    font-size: 1rem;
-    cursor: pointer;
+    font-weight: bolder;
 }
 .todo.selected {
-    background-color: var(--lime-color);
+    background-color: var(--dark-color);
 }
 
 /* FOOTER */
