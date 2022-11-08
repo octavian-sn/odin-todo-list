@@ -192,8 +192,7 @@ document.getElementById('add-task').addEventListener('click', (e) => {
     function clearFields() {
         title.value = '';
         description.value = '';
-        priority.innerText = 'Optional';
-        priority.value = 'OPTIONAL'
+        priority.value = 'Optional';
         date.value = '';
     }
     // Select project
