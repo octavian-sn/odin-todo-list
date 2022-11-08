@@ -62,11 +62,35 @@
                     <div class="todo-date">11.06.2023</div>
                     <input type="checkbox">
                 </div>
-                <div class="todo">
+                <div class="todo expanded">
                     <div class="todo-name">Science Project</div>
                     <div class="todo-priority">CAN WAIT</div>
                     <div class="todo-date">11.06.2023</div>
                     <input type="checkbox">
+                    <div id="dropdown" class="dropdown">
+                        <textarea name="details" id="details" cols="30" rows="10"></textarea>
+                        <div class="row-one">
+                            <label for="project-drop">Change project:</label>
+                            <select name="project-drop" id="project-drop">
+                                <option value="School">School</option>
+                                <option value="Programming">Programming</option>
+                                <option value="Computer science">Computer Science</option>
+                            </select>
+                        </div>
+                        <div class="row-two">
+                            <label for="priority-drop">Priority:</label>
+                            <select name="priority-drop" id="priority-drop">
+                                <option value="OPTIONAL">Optional</option>
+                                <option value="CAN WAIT">Can wait</option>
+                                <option value="URGENT">Urgent</option>
+                            </select>
+                        </div>
+                        <div class="row-three">
+                            <label for="date-drop">Due date:</label>
+                            <input type="date" id="date" name="date">
+                        </div>
+                        <button class="delete-task">DELETE TASK</button>
+                    </div>
                 </div>
                 <div class="todo">
                     <div class="todo-name">Science Project</div>

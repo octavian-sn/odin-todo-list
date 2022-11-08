@@ -66,10 +66,10 @@ form div {
     gap: 5px;
 }
 form input,
-#date {
+form div #date {
     width: 344px;
 }
-select{
+form div select{
     width: 352px;
 }
 #form-title {

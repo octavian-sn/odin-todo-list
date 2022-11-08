@@ -13,7 +13,7 @@
     --completed--color: rgb(184, 184, 184);
 }
 * {
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 body {
     margin: 0;
@@ -175,31 +175,33 @@ body {
     background-color: var(--lime-color);
     border: 2px solid rgba(154, 184, 109, 0);
 }
+/* ToDos container */
 #content-show{
     display: flex;
     flex-direction: column;
     gap: 18px;
+    padding-bottom: 24px;
 }
 .todo{
+    background-image: url('./down.png');
+    background-repeat: no-repeat;
+    background-position: top 7px left;
     font-family: 'myFont';
     font-size: 1rem;
     max-width: 800px;
     display: grid;
     grid-template-columns: 1fr 90px 140px 40px;
-    height: 36px;
+    grid-template-rows: 36px 1fr;
+    /* height: 36px; */
     background-color: var(--gray-color);
     border-radius: 4px;
     border-left: 6px solid var(--gray-color);
     color: white;
 }
+
 .todo:hover {
     background-color: var(--dark-color);
     border-left: 6px solid initial;
-}
-.completed,
-.completed:hover {
-    /* background-color: var(--completed--color); */
-    opacity: 50%;
 }
 .todo div {
     display: flex;
@@ -207,17 +209,27 @@ body {
 }
 .todo-name {
     justify-content: start;
-    padding-left: 12px;
+    padding-left: 26px;
     font-size: 1.1rem;
     overflow: hidden;
+    cursor: pointer;
+}
+.todo-priority {
+    font-weight: bolder;
+    justify-content: center;
+    cursor: pointer;
+}
+.todo-date {
+    justify-content: center;
+    font-weight: bolder;
 }
 input[type="checkbox"] {
     align-self: center;
     appearance: none;
     background-color: rgb(228, 228, 228);
     border-radius: 9%;
-    height: 20px;
-    width: 20px;
+    height: 16px;
+    width: 16px;
     margin: 0;
     cursor: pointer;
     background-size: cover;
@@ -225,16 +237,14 @@ input[type="checkbox"] {
 input[type="checkbox"]:checked {
     background-image: url('./check.png');
 }
-.todo-priority {
-    font-weight: bolder;
-    justify-content: center;
+/* ToDo states (completed/selected) */
+.completed,
+.completed:hover {
+    filter: grayscale(100%) opacity(70%);
 }
-.todo-date {
-    justify-content: center;
-    font-weight: bolder;
-}
-.todo.selected {
+.todo.expanded {
     background-color: var(--dark-color);
+    background-image: url('./up.png');
 }
 
 /* FOOTER */

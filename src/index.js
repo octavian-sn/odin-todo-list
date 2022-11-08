@@ -1,8 +1,9 @@
 import './style.css';
 import './modal.css';
+import './dropdown.css'
 import { v4 as uuidv4 } from 'uuid';
 import { deleteToDoS, displayProject, displayTodo, toggleModal, highlightProject,
-     clearToDos, deleteProject, checkUncheckToDo} from './display.js';
+     clearToDos, deleteProject, checkUncheckToDo, expandToDo} from './display.js';
 
 // Todo factory
 const toDo = (name, priority, date, description, id, projectId, status = 'uncompleted') => {
@@ -191,7 +192,8 @@ document.getElementById('add-task').addEventListener('click', (e) => {
     function clearFields() {
         title.value = '';
         description.value = '';
-        priority.value = 'Optional';
+        priority.innerText = 'Optional';
+        priority.value = 'OPTIONAL'
         date.value = '';
     }
     // Select project
@@ -223,6 +225,17 @@ document.getElementById('content-show').addEventListener('click', (e)=> {
         // DOM
         checkUncheckToDo(e.target.parentElement.id);
         saveData();
+    }
+})
+
+// Expand ToDo
+document.getElementById('content-show').addEventListener('click', (e) => {
+    if (e.target.classList.contains('todo-name') ||
+    e.target.classList.contains('todo-priority') ||
+    e.target.classList.contains('todo-date')) {
+        const todoID = e.target.closest('.todo').id;
+        const projectID = e.target.closest('.todo').getAttribute('data-parent');
+        expandToDo(todoID);
     }
 })
 
