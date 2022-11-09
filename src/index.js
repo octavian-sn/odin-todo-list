@@ -26,6 +26,9 @@ const project = (name, id, list) => {
         const item = toDo(a, b, c, d, e, f);
         toDoList.push(item);
     }
+    const getToDo = (a) => {
+        return toDoList.find(item => item.id == a);
+    }
     const checkToDo = (a) => {
         toDoList.forEach(task => {
             if (task.id === a) {
@@ -40,14 +43,13 @@ const project = (name, id, list) => {
             if (task.id == a) toDoList.splice(toDoList[task], 1);
         });
     }
-    return {name, id, toDoList, addTodo, deleteTodo, showToDoS, checkToDo}
+    return {name, id, toDoList, addTodo, getToDo, deleteTodo, showToDoS, checkToDo}
 }
 
 // Project Manager
 const manager = (() => {
     let currentProjectId = JSON.parse(localStorage.getItem('current.project')) || 'upcoming';
     const projects = reconstruct() || [];
-    
     const getProject = (a) => {
         return (manager.projects).find(item => item.id == a);
     }
@@ -229,12 +231,16 @@ document.getElementById('content-show').addEventListener('click', (e)=> {
 
 // Expand ToDo
 document.getElementById('content-show').addEventListener('click', (e) => {
+    // Expand ToDo when clicking on name/priority/date
     if (e.target.classList.contains('todo-name') ||
     e.target.classList.contains('todo-priority') ||
     e.target.classList.contains('todo-date')) {
         const todoID = e.target.closest('.todo').id;
-        const projectID = e.target.closest('.todo').getAttribute('data-parent');
-        expandToDo(todoID);
+        const projectID = e.target.closest('.todo').getAttribute('data-parent')
+        const project = manager.getProject(projectID);
+        const toDo = project.getToDo(todoID);
+        expandToDo(todoID, toDo.description, toDo.priority, toDo.date,
+            manager.projects, projectID);
     }
 })
 
@@ -262,8 +268,8 @@ document.getElementById('test').addEventListener('click', ()=>{
     console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
     console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
     console.log(`%cExecuting getProject(): %c${manager.getProject(manager.currentProjectId)}`, 'color: green', 'color: white');
-    // console.log(project);
     console.log(manager.projects);
+    // console.log(manager.getProject(manager.currentProjectId).showToDoS());
     // console.log(reconstruct());
     // defaultFolder();
 })

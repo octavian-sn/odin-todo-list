@@ -12,9 +12,6 @@
     --yellow-color: rgb(226, 188, 83);
     --completed--color: rgb(184, 184, 184);
 }
-* {
-    /* overflow: hidden; */
-}
 body {
     margin: 0;
 }

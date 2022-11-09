@@ -14,7 +14,7 @@
     background-color: var(--white-color);
     padding: 8px 18px 18px 18px;
     display: grid;
-    grid-template-columns: 1fr 240px;
+    grid-template-columns: 1fr 260px;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     column-gap: 14px;
     border-top: solid 1px var(--gray-color);
@@ -39,7 +39,7 @@
 }
 #dropdown div select,
 #dropdown div input {
-    width: 110px;
+    width: 130px;
     height: 24px;
     font-size: 1rem;
     border-radius: 3px;
@@ -51,7 +51,7 @@
 #dropdown div #date {
     border: 2px solid rgb(182, 179, 179);
     padding-left: 4px;
-    width: 102px;
+    width: 122px;
     height: 20px;
     border-radius: 3px;
 }

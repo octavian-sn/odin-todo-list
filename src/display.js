@@ -99,9 +99,10 @@ export function checkUncheckToDo (a) {
     todo.classList.toggle('completed');
 }
 
-export function expandToDo (a, b) {
+export function expandToDo (taskId, taskDetails, taskPriority, taskDate, projects,
+    projectId) {
     // Task container
-    const container = document.getElementById(a);
+    const container = document.getElementById(taskId);
     // Close drop-down if an expanded todo is selected
     if (container.lastChild.classList.contains('dropdown')) {
         container.lastChild.remove();
@@ -114,21 +115,24 @@ export function expandToDo (a, b) {
             drop.remove()
         };
 
-        // Create drop-down on selected todo
+        // Change arrow icon when selecting the ToDo
         container.style.backgroundImage = "url('../src/up.png')"
-
+        
+        // Create drop-down on selected todo
         const dropdown = document.createElement('div');
         dropdown.id = 'dropdown';
         dropdown.classList.add('dropdown');
     
+        // ToDo details
         const text = document.createElement('textarea');
         text.name ='details';
         text.id ='details';
         text.cols ='30';
         text.rows ='10';
-        text.value = 'This is until I will get arguments to fill';
+        text.value = taskDetails;
         dropdown.appendChild(text);
     
+        // PROJECT selector
         const projectDiv = document.createElement('div');
         projectDiv.classList.add('row-one');
         const projectLabel = document.createElement('label');
@@ -138,14 +142,18 @@ export function expandToDo (a, b) {
         const projectSelect = document.createElement('select');
         projectSelect.name ='project-drop';
         projectSelect.id ='project-drop';
-        // for each project create an option
-        const option = document.createElement('option');
-        option.value = 'ID of project';
-        option.innerText = 'Project Name';
-        projectSelect.appendChild(option);
+        // For each project create an option setting it's id as value and name as inner text
+        projects.forEach(project => {
+            const option = document.createElement('option');
+            option.value = project.id;
+            option.innerText = project.name;
+            if (projectId === project.id) {option.selected = true};
+            projectSelect.appendChild(option);
+        })
         projectDiv.appendChild(projectSelect);
         dropdown.appendChild(projectDiv);
     
+        // PRIORITY Selector
         const priorityDiv = document.createElement('div');
         priorityDiv.classList.add('row-two');
         const priorityLabel = document.createElement('label');
@@ -167,9 +175,16 @@ export function expandToDo (a, b) {
         optionThree.value ='URGENT';
         optionThree.innerText ='Urgent';
         prioritySelect.appendChild(optionThree);
+        // Select current priority
+        if (optionOne.value == taskPriority) {
+            optionOne.selected = true;
+        } else if (optionTwo.value == taskPriority) {
+            optionTwo.selected = true;
+        } else { optionThree.selected = true};
         priorityDiv.appendChild(prioritySelect);
         dropdown.appendChild(priorityDiv);
     
+        // DATE Selector
         const dateDiv = document.createElement('div');
         dateDiv.classList.add('row-three');
         const dateLabel = document.createElement('label');
@@ -180,14 +195,17 @@ export function expandToDo (a, b) {
         dateInput.type ='date';
         dateInput.id ='date';
         dateInput.name ='date';
+        dateInput.value =taskDate;
         dateDiv.appendChild(dateInput);
         dropdown.appendChild(dateDiv);
     
+        // DELETE Button
         const button = document.createElement('button');
         button.classList.add = 'delete-task';
         button.innerText = 'DELETE TASK';
         dropdown.appendChild(button);
     
+        // Append dropdown to ToDo's div
         container.appendChild(dropdown);
     }
 }
