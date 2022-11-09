@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { deleteToDoS, displayProject, displayTodo, toggleModal, highlightProject,
      clearToDos, deleteProject, checkUncheckToDo, expandToDo, deleteTask,
     toDoColoring} from './display.js';
+import { isThisWeek, format, addDays, toDate, isToday, parseISO } from 'date-fns';
 
 // Todo factory
 const toDo = (name, priority, date, description, id, projectId, status = 'uncompleted') => {
@@ -74,6 +75,13 @@ const manager = (() => {
     const getProject = (a) => {
         return (manager.projects).find(item => item.id == a);
     }
+    const getAllToDoS = () => {
+        let allToDoS = []
+        manager.projects.forEach(project => {
+            allToDoS = allToDoS.concat(project.showToDoS())
+        })
+        return allToDoS
+    }
     const changeProject = (a) => {
         manager.currentProjectId = a;
     }
@@ -90,7 +98,7 @@ const manager = (() => {
         })
     } 
     return {getProject, addProject, changeProject, deleteProject, projects, 
-        currentProjectId}
+        currentProjectId, getAllToDoS}
 })() 
 
 // Process prompt input for project name
@@ -125,7 +133,7 @@ function reconstruct() {
 }
 
 // Create default folder (Upcoming)
-function defaultFolder () {
+function defaultFolder() {
     if (JSON.stringify(manager.projects) === JSON.stringify([])) {
         manager.addProject('upcoming', 'upcoming')
         manager.changeProject('upcoming');
@@ -134,11 +142,9 @@ function defaultFolder () {
 }
 
 // Display AllToDos
-function displayAllToDos () {
-    manager.projects.forEach(project => {
-        project.showToDoS().forEach(item =>{
-            displayTodo(item.id, item.name, item.priority, item.date, item.projectId, item.status);
-        })
+function displayAllToDos() {
+    manager.getAllToDoS().forEach(item =>{
+        displayTodo(item.id, item.name, item.priority, item.date, item.projectId, item.status);
     })
 }
 
@@ -349,9 +355,11 @@ document.getElementById('test').addEventListener('click', ()=>{
     console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
     console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
     console.log(`%cExecuting getProject(): %c${manager.getProject(manager.currentProjectId)}`, 'color: green', 'color: white');
-    console.log(manager.projects);
-    // console.log(manager.getProject(manager.currentProjectId).showToDoS());
-    // console.log(reconstruct());
-    // defaultFolder();
+    // const task = manager.getProject(manager.currentProjectId).toDoList[1];
+    // const today = format(new Date, 'yyyy-MM-dd');
+    // const week = format(addDays(new Date, 7), 'yyyy-MM-dd')
+    // console.log(task.date, today, week)
+    // console.log(isToday(parseISO(task.date)))
+    // console.log(isThisWeek(parseISO(task.date)))
 })
 
