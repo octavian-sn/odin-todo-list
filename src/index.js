@@ -41,7 +41,7 @@ const project = (name, id, list) => {
     }
     const deleteTodo = (a) => {
         toDoList.forEach(task => {
-            if (task.id == a) toDoList.splice(toDoList[task], 1);
+            if (task.id == a) toDoList.splice(toDoList.indexOf(task), 1);
         });
     }
     const changeTodoDetails = (a, b) => {
@@ -234,7 +234,7 @@ document.getElementById('content-show').addEventListener('click', (e)=> {
     }
 })
 
-// Expand ToDo and related Dropdown functionality (Delete/Change ToDo's)
+// Expand ToDo and Delete ToDo
 document.getElementById('content-show').addEventListener('click', (e) => {
     const todoID = e.target.closest('.todo').id;
     const projectID = e.target.closest('.todo').getAttribute('data-parent')
@@ -255,9 +255,9 @@ document.getElementById('content-show').addEventListener('click', (e) => {
         project.deleteTodo(todoID);
         saveData()
     }
-
-    // 
 })
+
+
 
 // Initial Page Load
 window.addEventListener('load', ()=> {
