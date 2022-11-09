@@ -44,8 +44,15 @@ const project = (name, id, list) => {
             if (task.id == a) toDoList.splice(toDoList.indexOf(task), 1);
         });
     }
-    const changeTodoDetails = (a, b) => {
-        getToDo(a).description = b;
+    const changeTodoDetails = (id, detail, data) => {
+        const task = getToDo(id);
+        if (detail == 'description') {
+            task.description = data;
+        } else if (detail == 'date') {
+            task.date = data;
+        } else if (detail === 'priority') {
+            task.priority = data;
+        }
     }
     return {name, id, toDoList, addTodo, getToDo, deleteTodo, showToDoS, checkToDo,
     changeTodoDetails}
@@ -257,7 +264,41 @@ document.getElementById('content-show').addEventListener('click', (e) => {
     }
 })
 
+// Change project/details/date/priority
+document.getElementById('content-show').addEventListener('input', (e)=> {
+    const todoID = e.target.closest('.todo').id;
+    const projectID = e.target.closest('.todo').getAttribute('data-parent')
+    const project = manager.getProject(projectID);
+    const toDo = project.getToDo(todoID);
+    
+    // Change details
+    if (e.target.type === 'textarea') {
+        project.changeTodoDetails(todoID, 'description', 
+        document.getElementById('details').value);
+        saveData()
+    }
 
+    // Change date
+    if (e.target.type === 'date') {
+        const newValue = document.getElementById('date').value;
+        const display = e.target.parentElement.parentElement.previousSibling.
+        previousSibling;
+        project.changeTodoDetails(todoID, 'date', newValue);
+        display.innerText = newValue;
+        saveData()
+    }
+
+    // Change priority
+    if (e.target.id === 'priority-drop') {
+        const newValue = document.getElementById('priority-drop').value
+        const display = e.target.parentElement.parentElement.previousSibling.
+        previousSibling.previousSibling;
+        project.changeTodoDetails(todoID, 'priority', newValue)
+        display.innerText = newValue
+        saveData();
+        // ADDD CHANGE COLORS WHEN RENDERING PRIORITY
+    }
+})
 
 // Initial Page Load
 window.addEventListener('load', ()=> {
