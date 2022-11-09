@@ -295,8 +295,11 @@ document.getElementById('content-show').addEventListener('input', (e)=> {
             project.changeTodoDetails(todoID, 'projectId', newProjectId);
             // Move the deleted ToDo into the selected object's array
             manager.getProject(newProjectId).moveTodo(project.deleteTodo(todoID)[0]);
-            // De-render the todo
-            deleteTask(todoID);
+            // De-render the todo if current folder is not Upcoming
+            if (manager.currentProjectId === 'upcoming') {
+                clearToDos()
+                displayAllToDos();
+            } else deleteTask(todoID);
             saveData();
         }
     }
