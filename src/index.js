@@ -27,6 +27,9 @@ const project = (name, id, list) => {
         const item = toDo(a, b, c, d, e, f);
         toDoList.push(item);
     }
+    const moveTodo = (a) => {
+        toDoList.push(a);
+    }
     const getToDo = (a) => {
         return toDoList.find(item => item.id == a);
     }
@@ -40,9 +43,13 @@ const project = (name, id, list) => {
         })
     }
     const deleteTodo = (a) => {
+        let deleted = ''
         toDoList.forEach(task => {
-            if (task.id == a) toDoList.splice(toDoList.indexOf(task), 1);
+            if (task.id == a) {
+                deleted = toDoList.splice(toDoList.indexOf(task), 1);
+            }
         });
+        return deleted;
     }
     const changeTodoDetails = (id, detail, data) => {
         const task = getToDo(id);
@@ -55,7 +62,7 @@ const project = (name, id, list) => {
         }
     }
     return {name, id, toDoList, addTodo, getToDo, deleteTodo, showToDoS, checkToDo,
-    changeTodoDetails}
+    changeTodoDetails, moveTodo}
 }
 
 // Project Manager
@@ -271,6 +278,17 @@ document.getElementById('content-show').addEventListener('input', (e)=> {
     const project = manager.getProject(projectID);
     const toDo = project.getToDo(todoID);
     
+    // Change project
+    if (e.target.id === 'project-drop') {
+        const newProjectId = document.getElementById('project-drop').value
+        if (newProjectId === projectID) return
+        else {
+            manager.getProject(newProjectId).moveTodo(project.deleteTodo(todoID)[0]);
+            deleteTask(todoID);
+            saveData();
+        }
+    }
+
     // Change details
     if (e.target.type === 'textarea') {
         project.changeTodoDetails(todoID, 'description', 
