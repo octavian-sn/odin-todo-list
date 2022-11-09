@@ -69,7 +69,7 @@ export function displayTodo (a, b, c, d, e, f) {
     container.appendChild(task);
 }
 
-function toDoColoring (value, taskDiv, priorityDiv) {
+export function toDoColoring (value, taskDiv, priorityDiv) {
     if (value === 'CAN WAIT') {
         taskDiv.style.borderLeftColor = 'var(--yellow-color)';
         priorityDiv.style.color = 'var(--yellow-color)';
@@ -77,6 +77,10 @@ function toDoColoring (value, taskDiv, priorityDiv) {
     if (value === 'URGENT') {
         taskDiv.style.borderLeftColor = 'var(--red-color)';
         priorityDiv.style.color = 'var(--red-color)';
+    } 
+    if (value === 'OPTIONAL') {
+        taskDiv.style.borderLeftColor = 'var(--gray-color)';
+        priorityDiv.style.color = 'white';
     }
 }
 

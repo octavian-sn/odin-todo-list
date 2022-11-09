@@ -4,7 +4,7 @@ import './dropdown.css'
 import { v4 as uuidv4 } from 'uuid';
 import { deleteToDoS, displayProject, displayTodo, toggleModal, highlightProject,
      clearToDos, deleteProject, checkUncheckToDo, expandToDo, deleteTask,
-    } from './display.js';
+    toDoColoring} from './display.js';
 
 // Todo factory
 const toDo = (name, priority, date, description, id, projectId, status = 'uncompleted') => {
@@ -262,7 +262,7 @@ document.getElementById('content-show').addEventListener('click', (e) => {
     e.target.classList.contains('todo-priority') ||
     e.target.classList.contains('todo-date')) {
         expandToDo(todoID, toDo.description, toDo.priority, toDo.date,
-            manager.projects, projectID);
+        manager.projects, projectID);
     }
 
     // Delete ToDo
@@ -319,8 +319,9 @@ document.getElementById('content-show').addEventListener('input', (e)=> {
         previousSibling.previousSibling;
         project.changeTodoDetails(todoID, 'priority', newValue)
         display.innerText = newValue
+        // Change colors when changing priority
+        toDoColoring(newValue, e.target.closest('.todo'), e.target.parentElement.parentElement.previousSibling.previousSibling.previousSibling);
         saveData();
-        // ADDD CHANGE COLORS WHEN RENDERING PRIORITY
     }
 })
 
