@@ -3,7 +3,8 @@ import './modal.css';
 import './dropdown.css'
 import { v4 as uuidv4 } from 'uuid';
 import { deleteToDoS, displayProject, displayTodo, toggleModal, highlightProject,
-     clearToDos, deleteProject, checkUncheckToDo, expandToDo} from './display.js';
+     clearToDos, deleteProject, checkUncheckToDo, expandToDo, deleteTask,
+    } from './display.js';
 
 // Todo factory
 const toDo = (name, priority, date, description, id, projectId, status = 'uncompleted') => {
@@ -43,7 +44,11 @@ const project = (name, id, list) => {
             if (task.id == a) toDoList.splice(toDoList[task], 1);
         });
     }
-    return {name, id, toDoList, addTodo, getToDo, deleteTodo, showToDoS, checkToDo}
+    const changeTodoDetails = (a, b) => {
+        getToDo(a).description = b;
+    }
+    return {name, id, toDoList, addTodo, getToDo, deleteTodo, showToDoS, checkToDo,
+    changeTodoDetails}
 }
 
 // Project Manager
@@ -229,19 +234,29 @@ document.getElementById('content-show').addEventListener('click', (e)=> {
     }
 })
 
-// Expand ToDo
+// Expand ToDo and related Dropdown functionality (Delete/Change ToDo's)
 document.getElementById('content-show').addEventListener('click', (e) => {
+    const todoID = e.target.closest('.todo').id;
+    const projectID = e.target.closest('.todo').getAttribute('data-parent')
+    const project = manager.getProject(projectID);
+    const toDo = project.getToDo(todoID);
+
     // Expand ToDo when clicking on name/priority/date
     if (e.target.classList.contains('todo-name') ||
     e.target.classList.contains('todo-priority') ||
     e.target.classList.contains('todo-date')) {
-        const todoID = e.target.closest('.todo').id;
-        const projectID = e.target.closest('.todo').getAttribute('data-parent')
-        const project = manager.getProject(projectID);
-        const toDo = project.getToDo(todoID);
         expandToDo(todoID, toDo.description, toDo.priority, toDo.date,
             manager.projects, projectID);
     }
+
+    // Delete ToDo
+    if (e.target.classList.contains('delete-task')) {
+        deleteTask(todoID);
+        project.deleteTodo(todoID);
+        saveData()
+    }
+
+    // 
 })
 
 // Initial Page Load

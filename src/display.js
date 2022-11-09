@@ -1,3 +1,4 @@
+// Add project
 export function displayProject(title, number) {
     const container = document.getElementById('sider-content');
 
@@ -20,11 +21,13 @@ export function displayProject(title, number) {
     highlightProject(project);
 }
 
+// Delete project
 export function deleteProject(arg) {
     const project = document.getElementById(arg);
     project.remove();
 }
 
+// Render ToDo's
 export function displayTodo (a, b, c, d, e, f) {
     const container = document.getElementById('content-show');
     
@@ -40,6 +43,7 @@ export function displayTodo (a, b, c, d, e, f) {
     const priority = document.createElement('div');
     priority.classList.add('todo-priority');
     priority.innerText = c;
+    // Change color according to priority
     if (c === 'CAN WAIT') {
         task.style.borderLeftColor = 'var(--yellow-color)';
         priority.style.color = 'var(--yellow-color)';
@@ -64,6 +68,7 @@ export function displayTodo (a, b, c, d, e, f) {
     container.appendChild(task);
 }
 
+// Modal for adding ToDo's
 export function toggleModal () {
     const modal = document.getElementById('modal');
     const overlay = document.getElementById('overlay');
@@ -71,6 +76,7 @@ export function toggleModal () {
     overlay.classList.toggle('active');
 }
 
+// Highlight when selecting a project
 export function highlightProject (domElement) {
     const projects = document.getElementsByClassName('project');
     const options = document.getElementsByClassName('category');
@@ -87,6 +93,7 @@ export function clearToDos () {
     document.getElementById('content-show').innerHTML = '';
 }
 
+// Clear ToDo's along with parent folder
 export function deleteToDoS (a) {
     const tasks = document.querySelectorAll(`[data-parent='${a}']`);
     tasks.forEach(task => {
@@ -94,9 +101,13 @@ export function deleteToDoS (a) {
     })
 }
 
+export function deleteTask (a) {
+    document.getElementById(a).remove();
+}
+
+// Check for completion
 export function checkUncheckToDo (a) {
-    const todo = document.getElementById(a);
-    todo.classList.toggle('completed');
+    document.getElementById(a).classList.toggle('completed');
 }
 
 export function expandToDo (taskId, taskDetails, taskPriority, taskDate, projects,
@@ -201,7 +212,7 @@ export function expandToDo (taskId, taskDetails, taskPriority, taskDate, project
     
         // DELETE Button
         const button = document.createElement('button');
-        button.classList.add = 'delete-task';
+        button.classList.add('delete-task');
         button.innerText = 'DELETE TASK';
         dropdown.appendChild(button);
     
