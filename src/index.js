@@ -53,12 +53,14 @@ const project = (name, id, list) => {
     }
     const changeTodoDetails = (id, detail, data) => {
         const task = getToDo(id);
-        if (detail == 'description') {
+        if (detail === 'description') {
             task.description = data;
-        } else if (detail == 'date') {
+        } else if (detail === 'date') {
             task.date = data;
         } else if (detail === 'priority') {
             task.priority = data;
+        } else if ( detail === 'projectId') {
+            task.projectId = data;
         }
     }
     return {name, id, toDoList, addTodo, getToDo, deleteTodo, showToDoS, checkToDo,
@@ -280,10 +282,14 @@ document.getElementById('content-show').addEventListener('input', (e)=> {
     
     // Change project
     if (e.target.id === 'project-drop') {
-        const newProjectId = document.getElementById('project-drop').value
-        if (newProjectId === projectID) return
+        const newProjectId = document.getElementById('project-drop').value;
+        if (newProjectId === projectID) return;
         else {
+            // Change ToDo's PROJECT ID
+            project.changeTodoDetails(todoID, 'projectId', newProjectId);
+            // Move the deleted ToDo into the selected object's array
             manager.getProject(newProjectId).moveTodo(project.deleteTodo(todoID)[0]);
+            // De-render the todo
             deleteTask(todoID);
             saveData();
         }

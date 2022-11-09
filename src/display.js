@@ -44,14 +44,15 @@ export function displayTodo (a, b, c, d, e, f) {
     priority.classList.add('todo-priority');
     priority.innerText = c;
     // Change color according to priority
-    if (c === 'CAN WAIT') {
-        task.style.borderLeftColor = 'var(--yellow-color)';
-        priority.style.color = 'var(--yellow-color)';
-    }
-    if (c === 'URGENT') {
-        task.style.borderLeftColor = 'var(--red-color)';
-        priority.style.color = 'var(--red-color)';
-    }
+    toDoColoring(c, task, priority)
+    // if (c === 'CAN WAIT') {
+    //     task.style.borderLeftColor = 'var(--yellow-color)';
+    //     priority.style.color = 'var(--yellow-color)';
+    // }
+    // if (c === 'URGENT') {
+    //     task.style.borderLeftColor = 'var(--red-color)';
+    //     priority.style.color = 'var(--red-color)';
+    // }
     task.appendChild(priority);
     const date = document.createElement('div');
     date.classList.add('todo-date');
@@ -66,6 +67,17 @@ export function displayTodo (a, b, c, d, e, f) {
     task.appendChild(checkbox);
 
     container.appendChild(task);
+}
+
+function toDoColoring (value, taskDiv, priorityDiv) {
+    if (value === 'CAN WAIT') {
+        taskDiv.style.borderLeftColor = 'var(--yellow-color)';
+        priorityDiv.style.color = 'var(--yellow-color)';
+    }
+    if (value === 'URGENT') {
+        taskDiv.style.borderLeftColor = 'var(--red-color)';
+        priorityDiv.style.color = 'var(--red-color)';
+    }
 }
 
 // Modal for adding ToDo's
