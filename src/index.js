@@ -344,6 +344,12 @@ document.getElementById('content-show').addEventListener('input', (e)=> {
         project.changeTodoDetails(todoID, 'date', newValue);
         display.innerText = newValue;
         saveData()
+
+        // While browsing in 'today/this week', if newly selected date doesn't coincide with filter, remove tasks
+        if (document.getElementById('today').classList.contains('selected') &&
+        !isToday(parseISO(newValue))) e.target.closest('.todo').remove();
+        if (document.getElementById('week').classList.contains('selected') &&
+        !isThisWeek(parseISO(newValue))) e.target.closest('.todo').remove();
     }
 
     // Change priority
