@@ -62,6 +62,7 @@ export function displayTodo (a, b, c, d, e, f) {
     container.appendChild(task);
 }
 
+// Color the task's border and priority status
 export function toDoColoring (value, taskDiv, priorityDiv) {
     if (value === 'CAN WAIT') {
         taskDiv.style.borderLeftColor = 'var(--yellow-color)';

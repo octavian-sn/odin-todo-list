@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { deleteToDoS, displayProject, displayTodo, toggleModal, highlightProject,
      clearToDos, deleteProject, checkUncheckToDo, expandToDo, deleteTask,
     toDoColoring} from './display.js';
-import { isThisWeek, format, addDays, toDate, isToday, parseISO } from 'date-fns';
+import { isThisWeek, isToday, parseISO } from 'date-fns';
 
 // Todo factory
 const toDo = (name, priority, date, description, id, projectId, status = 'uncompleted') => {
@@ -142,9 +142,27 @@ function defaultFolder() {
 }
 
 // Display AllToDos
-function displayAllToDos() {
-    manager.getAllToDoS().forEach(item =>{
+function displayAllToDos(a = manager.getAllToDoS()) {
+    a.forEach(item =>{
         displayTodo(item.id, item.name, item.priority, item.date, item.projectId, item.status);
+    })
+}
+
+// Filter ToDo's for day/week
+function filterTasks(a) {
+    let tasks
+    if (a === 'today') {
+        tasks = manager.getAllToDoS().filter(task => {
+            return isToday(parseISO(task.date));
+        })
+    }
+    if (a === 'week') {
+        tasks = manager.getAllToDoS().filter(task => {
+            return isThisWeek(parseISO(task.date));
+        })
+    }
+    return tasks.filter(task => {
+        if (task.status === 'uncompleted') return task;
     })
 }
 
@@ -253,6 +271,12 @@ document.getElementById('content-show').addEventListener('click', (e)=> {
         // DOM
         checkUncheckToDo(e.target.parentElement.id);
         saveData();
+
+        // Remove elements from DOM if they are checked for completion WHILE IN 'Today' or 'This week' filters
+        if (document.getElementById('today').classList.contains('selected') ||
+        document.getElementById('week').classList.contains('selected')) {
+            e.target.parentElement.remove();
+        }
     }
 })
 
@@ -330,7 +354,8 @@ document.getElementById('content-show').addEventListener('input', (e)=> {
         project.changeTodoDetails(todoID, 'priority', newValue)
         display.innerText = newValue
         // Change colors when changing priority
-        toDoColoring(newValue, e.target.closest('.todo'), e.target.parentElement.parentElement.previousSibling.previousSibling.previousSibling);
+        toDoColoring(newValue, e.target.closest('.todo'), 
+        e.target.parentElement.parentElement.previousSibling.previousSibling.previousSibling);
         saveData();
     }
 })
@@ -353,6 +378,22 @@ window.addEventListener('load', ()=> {
         })
     }
 });
+
+// Sorting ToDo's for Today
+document.getElementById('today').addEventListener('click', (e) => {
+    clearToDos()
+    displayAllToDos(filterTasks('today'));
+    highlightProject();
+    document.getElementById('today').classList.add('selected');
+})
+
+// Sorting ToDo's for This Week
+document.getElementById('week').addEventListener('click', (e) => {
+    clearToDos()
+    displayAllToDos(filterTasks('week'));
+    highlightProject();
+    document.getElementById('week').classList.add('selected');
+})
 
 // Testing
 document.getElementById('test').addEventListener('click', ()=>{
