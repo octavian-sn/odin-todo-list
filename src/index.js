@@ -401,17 +401,33 @@ document.getElementById('week').addEventListener('click', (e) => {
     document.getElementById('week').classList.add('selected');
 })
 
-// Testing
-document.getElementById('test').addEventListener('click', ()=>{
-    console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
-    console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
-    console.log(`%cExecuting getProject(): %c${manager.getProject(manager.currentProjectId)}`, 'color: green', 'color: white');
-    console.log(manager.projects);
-    // const task = manager.getProject(manager.currentProjectId).toDoList[1];
-    // const today = format(new Date, 'yyyy-MM-dd');
-    // const week = format(addDays(new Date, 7), 'yyyy-MM-dd')
-    // console.log(task.date, today, week)
-    // console.log(isToday(parseISO(task.date)))
-    // console.log(isThisWeek(parseISO(task.date)))
+// Disable 'add project button' when navigating today/this week filters
+window.addEventListener('click', () => {
+    const title = document.getElementById('content-title').childNodes[1];
+    const button = document.getElementById('content-title').childNodes[3];
+    if (document.getElementById('today').classList.contains('selected')) {
+        title.innerText = "Today";
+        button.style.visibility = 'hidden';
+    } else if (document.getElementById('week').classList.contains('selected')) {
+        title.innerText = "This week";
+        button.style.visibility = 'hidden';
+    } else {
+        title.innerText = "Add Task";
+        button.style.visibility = 'visible';
+    }
 })
+
+// Testing
+// document.getElementById('test').addEventListener('click', ()=>{
+//     console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
+//     console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
+//     console.log(`%cExecuting getProject(): %c${manager.getProject(manager.currentProjectId)}`, 'color: green', 'color: white');
+//     console.log(manager.projects);
+//     const task = manager.getProject(manager.currentProjectId).toDoList[1];
+//     const today = format(new Date, 'yyyy-MM-dd');
+//     const week = format(addDays(new Date, 7), 'yyyy-MM-dd')
+//     console.log(task.date, today, week)
+//     console.log(isToday(parseISO(task.date)))
+//     console.log(isThisWeek(parseISO(task.date)))
+// })
 
