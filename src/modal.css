@@ -66,7 +66,8 @@ form div {
     gap: 5px;
 }
 form input,
-form div #date {
+form div #date,
+form textarea {
     width: 344px;
 }
 form div select{
