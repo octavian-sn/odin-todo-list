@@ -296,10 +296,11 @@ document.getElementById('content-show').addEventListener('input', (e)=> {
             // Move the deleted ToDo into the selected object's array
             manager.getProject(newProjectId).moveTodo(project.deleteTodo(todoID)[0]);
             // De-render the todo if current folder is not Upcoming
+            if (manager.currentProjectId !== 'upcoming') deleteTask(todoID);
+                // Set new id of parent folder to the div when changing folders WHEN in upcoming
             if (manager.currentProjectId === 'upcoming') {
-                clearToDos()
-                displayAllToDos();
-            } else deleteTask(todoID);
+                e.target.closest('.todo').dataset.parent = newProjectId;
+            }
             saveData();
         }
     }
@@ -358,6 +359,7 @@ document.getElementById('test').addEventListener('click', ()=>{
     console.log(`%cCurrent Project Id is: %c${manager.currentProjectId}`, 'color: green', 'color: white');
     console.log(`%cProjects are: %c${manager.projects}`, 'color: green', 'color: white');
     console.log(`%cExecuting getProject(): %c${manager.getProject(manager.currentProjectId)}`, 'color: green', 'color: white');
+    console.log(manager.projects);
     // const task = manager.getProject(manager.currentProjectId).toDoList[1];
     // const today = format(new Date, 'yyyy-MM-dd');
     // const week = format(addDays(new Date, 7), 'yyyy-MM-dd')

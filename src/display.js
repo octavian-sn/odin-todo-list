@@ -43,16 +43,9 @@ export function displayTodo (a, b, c, d, e, f) {
     const priority = document.createElement('div');
     priority.classList.add('todo-priority');
     priority.innerText = c;
-    // Change color according to priority
+    // Change div color according to priority
     toDoColoring(c, task, priority)
-    // if (c === 'CAN WAIT') {
-    //     task.style.borderLeftColor = 'var(--yellow-color)';
-    //     priority.style.color = 'var(--yellow-color)';
-    // }
-    // if (c === 'URGENT') {
-    //     task.style.borderLeftColor = 'var(--red-color)';
-    //     priority.style.color = 'var(--red-color)';
-    // }
+
     task.appendChild(priority);
     const date = document.createElement('div');
     date.classList.add('todo-date');
