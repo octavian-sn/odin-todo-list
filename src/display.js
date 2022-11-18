@@ -168,7 +168,8 @@ export function expandToDo (taskId, taskDetails, taskPriority, taskDate, project
             const option = document.createElement('option');
             option.value = project.id;
             option.innerText = project.name;
-            if (projectId === project.id) {option.selected = true};
+            if (project.id === 'upcoming') option.innerText = 'All Tasks';
+            if (projectId === project.id) option.selected = true;
             projectSelect.appendChild(option);
         })
         projectDiv.appendChild(projectSelect);
